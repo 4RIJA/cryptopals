@@ -2,6 +2,7 @@ package cryptoutil
 
 import (
 	"errors"
+	"strings"
 )
 
 func HexDecode(s string) ([]byte, error) {
@@ -36,5 +37,27 @@ func hexValue(c byte) (byte, error) {
 		return c - 'A' + 10, nil
 	default:
 		return 0, errors.New("invalid hexadecimal character")
+	}
+}
+
+func HexEncode(b []byte) string {
+	var sol strings.Builder
+	for _, v := range b {
+		v1, _ := valueHex(v >> 4)
+		sol.WriteByte(v1)
+		v2, _ := valueHex(v & 0b00001111)
+		sol.WriteByte(v2)
+	}
+	return sol.String()
+}
+
+func valueHex(b byte) (byte, error) {
+	switch {
+	case b < 0x0A:
+		return '0' + b, nil
+	case b < 0x10:
+		return 'a' + (b - 0x0A), nil
+	default:
+		return 0, errors.New("not a valid value to convert to hex")
 	}
 }

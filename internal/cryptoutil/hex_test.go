@@ -52,3 +52,37 @@ func TestHexDecode(t *testing.T) {
 		})
 	}
 }
+func TestValueHex(t *testing.T) {
+	tests := []struct {
+		in   byte
+		want byte
+	}{
+		{0, '0'},
+		{9, '9'},
+		{10, 'a'},
+		{15, 'f'},
+	}
+	for _, tt := range tests {
+		got, _ := valueHex(tt.in)
+		if got != tt.want {
+			t.Errorf("valueHex(%d) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
+
+func TestHexEncode(t *testing.T) {
+	tests := []struct {
+		in   []byte
+		want string
+	}{
+		{[]byte{0x4f}, "4f"},
+		{[]byte{0x0a}, "0a"},
+		{[]byte{0xde, 0xad, 0xbe, 0xef}, "deadbeef"},
+	}
+	for _, tt := range tests {
+		got := HexEncode(tt.in)
+		if got != tt.want {
+			t.Errorf("hexEncode(%x) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
