@@ -14,9 +14,9 @@ func FixedXor(a []byte, b []byte) ([]byte, error) {
 	return sol, nil
 }
 
-func XorRepeatedKeys(keys []byte, a []byte) []byte {
-	result := make([]byte, len(a))
-	for i, v := range a {
+func XorRepeatedKeys(keys []byte, toEncrypt []byte) []byte {
+	result := make([]byte, len(toEncrypt))
+	for i, v := range toEncrypt {
 		key := keys[i%len(keys)]
 		result[i] = xor(v, key)
 	}

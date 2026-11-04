@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestHexValue(t *testing.T) {
+func TestHexToBin(t *testing.T) {
 	tests := []struct {
 		in   byte
 		want byte
@@ -18,7 +18,7 @@ func TestHexValue(t *testing.T) {
 		{'F', 15},
 	}
 	for _, tt := range tests {
-		got, err := hexValue(tt.in)
+		got, err := hexToBin(tt.in)
 		if err != nil {
 			t.Fatalf("hexValue(%q) devolvio error: %v", tt.in, err)
 		}
@@ -52,7 +52,7 @@ func TestHexDecode(t *testing.T) {
 		})
 	}
 }
-func TestValueHex(t *testing.T) {
+func TestBinToHex(t *testing.T) {
 	tests := []struct {
 		in   byte
 		want byte
@@ -63,7 +63,7 @@ func TestValueHex(t *testing.T) {
 		{15, 'f'},
 	}
 	for _, tt := range tests {
-		got, _ := valueHex(tt.in)
+		got, _ := binToHex(tt.in)
 		if got != tt.want {
 			t.Errorf("valueHex(%d) = %q, want %q", tt.in, got, tt.want)
 		}
