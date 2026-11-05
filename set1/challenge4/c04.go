@@ -12,11 +12,11 @@ func findEncrypted(path string) (string, error) {
 	bestResult := ""
 
 	for _, str := range strings {
-		c, e := cryptoutil.DecryptXor(str)
-
+		decoded, e := cryptoutil.HexDecode(str)
 		if e != nil {
 			return "", e
 		}
+		c := cryptoutil.FindXorKey(decoded)
 
 		if c.Score > bestScore {
 			bestScore = c.Score

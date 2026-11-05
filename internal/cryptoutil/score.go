@@ -1,9 +1,19 @@
 package cryptoutil
 
+import "strings"
+
 func ScoreEnglish(b []byte) float64 {
 	var score float64
 	for _, v := range b {
-		score += freq[v]
+		// Esto convierte las mayusculas a minuscula
+		if v >= 'A' && v <= 'Z' {
+			v += 'a' - 'A'
+		}
+		if s, ok := freq[v]; ok {
+			score += s
+		} else if strings.IndexByte("(){}\"\\,.'!?-;:\n", v) < 0 {
+			score -= 50
+		}
 	}
 	return score
 }

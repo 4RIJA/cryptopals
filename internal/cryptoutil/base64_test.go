@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestBase64Value(t *testing.T) {
+func TestBinToBase64(t *testing.T) {
 	tests := []struct {
 		idx  byte
 		want byte
@@ -21,9 +21,9 @@ func TestBase64Value(t *testing.T) {
 		{63, '/'},
 	}
 	for _, tt := range tests {
-		got := base64Value(tt.idx)
+		got := binToBase64(tt.idx)
 		if got != tt.want {
-			t.Errorf("base64Value(%d) = %q, want %q", tt.idx, got, tt.want)
+			t.Errorf("binToBase64(%d) = %q, want %q", tt.idx, got, tt.want)
 		}
 	}
 }
@@ -46,6 +46,31 @@ func TestBase64Encode(t *testing.T) {
 			got := Base64Encode(tt.in)
 			if got != tt.want {
 				t.Errorf("base64Encode(%x) = %q, want %q", tt.in, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBase64Decode(t *testing.T) {
+	tests := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{"vacio", "", ""},
+		{"sobra 1 byte", "TQ==", "M"},
+		{"sobran 2 bytes", "TWE=", "Ma"},
+		{"multiplo de 3", "TWFu", "Man"},
+		{"frase larga", "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", "Many hands make light work."},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Base64Decode([]byte(tt.in))
+			if err != nil {
+				t.Fatalf("Base64Decode(%q) returned error: %v", tt.in, err)
+			}
+			if string(got) != tt.want {
+				t.Errorf("Base64Decode(%q) = %q, want %q", tt.in, got, tt.want)
 			}
 		})
 	}

@@ -6,16 +6,12 @@ type Candidate struct {
 	Score           float64
 }
 
-func DecryptXor(s string) (Candidate, error) {
-	rawBytes, err := HexDecode(s)
-	if err != nil {
-		return Candidate{}, err
-	}
+func FindXorKey(s []byte) Candidate {
 	bestScore := 0.0
 	var bestKey byte
 	var maxResult []byte
 	for i := range 256 {
-		b := XorRepeatedKeys([]byte{byte(i)}, rawBytes)
+		b := XorRepeatedKeys([]byte{byte(i)}, s)
 		currentScore := ScoreEnglish(b)
 		if currentScore > bestScore {
 			bestScore = currentScore
@@ -23,5 +19,5 @@ func DecryptXor(s string) (Candidate, error) {
 			maxResult = b
 		}
 	}
-	return Candidate{DecryptedString: maxResult, Key: bestKey, Score: bestScore}, nil
+	return Candidate{DecryptedString: maxResult, Key: bestKey, Score: bestScore}
 }
