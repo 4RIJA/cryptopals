@@ -41,14 +41,14 @@ func hexToBin(c byte) (byte, error) {
 }
 
 func HexEncode(b []byte) string {
-	var sol strings.Builder
+	var result strings.Builder
 	for _, v := range b {
 		v1, _ := binToHex(v >> 4)
-		sol.WriteByte(v1)
+		result.WriteByte(v1)
 		v2, _ := binToHex(v & 0b00001111)
-		sol.WriteByte(v2)
+		result.WriteByte(v2)
 	}
-	return sol.String()
+	return result.String()
 }
 
 func binToHex(b byte) (byte, error) {

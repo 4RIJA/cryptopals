@@ -9,7 +9,7 @@ func SplitIntoBlocks(data []byte, n int) [][]byte {
 	return blocks
 }
 
-// Funcion para transponer una matriz
+// Transpose transpone una matriz.
 func Transpose[T any](m [][]T) [][]T {
 	transposedMatrix := make([][]T, len(m[0]))
 	for _, row := range m {

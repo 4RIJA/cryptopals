@@ -20,7 +20,7 @@ func hammingDistance(aBytes []byte, bBytes []byte) (int, error) {
 	}
 
 	for _, b := range xorBytes {
-		distance += kenighanAlgorithm(b)
+		distance += kernighanAlgorithm(b)
 	}
 	return distance, nil
 
@@ -34,8 +34,8 @@ func BreakRepeatingKeyXor(input []byte) []byte {
 
 	for _, ks := range keySizes {
 		k := keyFromSize(input, ks)
-		deCipher := cryptoutil.XorRepeatedKeys(k, input)
-		score := cryptoutil.ScoreEnglish(deCipher)
+		decryptedText := cryptoutil.XorRepeatedKeys(k, input)
+		score := cryptoutil.ScoreEnglish(decryptedText)
 		if score > maxScore {
 			finalKey = k
 			maxScore = score
@@ -45,7 +45,7 @@ func BreakRepeatingKeyXor(input []byte) []byte {
 	return finalKey
 }
 
-// Devuelve la key que mejor resultado devuelve
+// Devuelve la clave que obtiene la mejor puntuación.
 func keyFromSize(input []byte, size int) []byte {
 	var key []byte
 	m := cryptoutil.SplitIntoBlocks(input, size)
@@ -82,7 +82,7 @@ func findMostProbableKeySizes(input []byte, from, to, numberOfKeys int) []int {
 			sumDistances += distance
 		}
 
-		// Normalizamos por keySize para poder comparar entre tamaños distintos
+		// Normalizamos por el tamaño de clave para comparar valores de distintos tamaños.
 		averageDist := (float64(sumDistances) / float64(numBlocks-1)) / float64(keySize)
 		keySizes = append(keySizes, KeySize{keySize, averageDist})
 	}
@@ -104,8 +104,8 @@ func findMostProbableKeySizes(input []byte, from, to, numberOfKeys int) []int {
 	return sizes
 }
 
-// Este algoritmo calcula el numero de bits a 1 eliminando de derecha a izquierda los 1 existentes en el byte. Esto pasa cuando comparas un byte con el anterior.
-func kenighanAlgorithm(b byte) int {
+// Cuenta los bits a uno eliminando, en cada iteración, el bit activo situado más a la derecha.
+func kernighanAlgorithm(b byte) int {
 	count := 0
 	for b != 0x00 {
 		count++

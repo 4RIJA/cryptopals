@@ -1,6 +1,10 @@
 package challenge4
 
-import "cryptopals/internal/cryptoutil"
+import (
+	"math"
+
+	"cryptopals/internal/cryptoutil"
+)
 
 func findEncrypted(path string) (string, error) {
 	strings, err := cryptoutil.ReadFileByLines(path)
@@ -8,7 +12,7 @@ func findEncrypted(path string) (string, error) {
 		return "", err
 	}
 
-	bestScore := 0.0
+	bestScore := math.Inf(-1)
 	bestResult := ""
 
 	for _, str := range strings {

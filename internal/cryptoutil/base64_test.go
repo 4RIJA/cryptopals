@@ -34,12 +34,12 @@ func TestBase64Encode(t *testing.T) {
 		in   []byte
 		want string
 	}{
-		{"vacio", []byte(""), ""},
-		{"sobra 1 byte", []byte("M"), "TQ=="},
-		{"sobran 2 bytes", []byte("Ma"), "TWE="},
-		{"multiplo de 3", []byte("Man"), "TWFu"},
-		{"sobra 1 byte con bits altos", []byte{0xD3}, "0w=="},
-		{"frase larga", []byte("Many hands make light work."), "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"},
+		{"empty", []byte(""), ""},
+		{"one remaining byte", []byte("M"), "TQ=="},
+		{"two remaining bytes", []byte("Ma"), "TWE="},
+		{"multiple of three", []byte("Man"), "TWFu"},
+		{"one remaining byte with high bits", []byte{0xD3}, "0w=="},
+		{"long phrase", []byte("Many hands make light work."), "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -57,11 +57,11 @@ func TestBase64Decode(t *testing.T) {
 		in   string
 		want string
 	}{
-		{"vacio", "", ""},
-		{"sobra 1 byte", "TQ==", "M"},
-		{"sobran 2 bytes", "TWE=", "Ma"},
-		{"multiplo de 3", "TWFu", "Man"},
-		{"frase larga", "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", "Many hands make light work."},
+		{"empty", "", ""},
+		{"one decoded byte", "TQ==", "M"},
+		{"two decoded bytes", "TWE=", "Ma"},
+		{"multiple of three", "TWFu", "Man"},
+		{"long phrase", "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu", "Many hands make light work."},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

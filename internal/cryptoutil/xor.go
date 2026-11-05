@@ -7,11 +7,11 @@ func FixedXor(a []byte, b []byte) ([]byte, error) {
 		return nil, errors.New("not the same length")
 	}
 
-	sol := make([]byte, len(b))
+	result := make([]byte, len(b))
 	for i := range a {
-		sol[i] = xor(a[i], b[i])
+		result[i] = xor(a[i], b[i])
 	}
-	return sol, nil
+	return result, nil
 }
 
 func XorRepeatedKeys(keys []byte, toEncrypt []byte) []byte {

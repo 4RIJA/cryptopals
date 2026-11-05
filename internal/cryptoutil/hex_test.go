@@ -20,7 +20,7 @@ func TestHexToBin(t *testing.T) {
 	for _, tt := range tests {
 		got, err := hexToBin(tt.in)
 		if err != nil {
-			t.Fatalf("hexValue(%q) devolvio error: %v", tt.in, err)
+			t.Fatalf("hexValue(%q) returned an error: %v", tt.in, err)
 		}
 		if got != tt.want {
 			t.Errorf("hexValue(%q) = %d, want %d", tt.in, got, tt.want)
@@ -34,17 +34,17 @@ func TestHexDecode(t *testing.T) {
 		in   string
 		want []byte
 	}{
-		{"vacio", "", []byte{}},
-		{"cero", "00", []byte{0x00}},
-		{"un byte", "4f", []byte{0x4f}},
-		{"mayusculas", "4F", []byte{0x4f}},
-		{"varios bytes", "deadbeef", []byte{0xde, 0xad, 0xbe, 0xef}},
+		{"empty", "", []byte{}},
+		{"zero", "00", []byte{0x00}},
+		{"one byte", "4f", []byte{0x4f}},
+		{"uppercase", "4F", []byte{0x4f}},
+		{"multiple bytes", "deadbeef", []byte{0xde, 0xad, 0xbe, 0xef}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := HexDecode(tt.in)
 			if err != nil {
-				t.Fatalf("hexDecode(%q) devolvio error: %v", tt.in, err)
+				t.Fatalf("hexDecode(%q) returned an error: %v", tt.in, err)
 			}
 			if !bytes.Equal(got, tt.want) {
 				t.Errorf("hexDecode(%q) = %x, want %x", tt.in, got, tt.want)

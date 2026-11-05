@@ -7,31 +7,31 @@ import (
 )
 
 func Base64Encode(b []byte) string {
-	var sol strings.Builder
+	var result strings.Builder
 	full := len(b) - len(b)%3
 
 	for i := 0; i < full; i += 3 {
-		sol.WriteByte(binToBase64(b[i] >> 2))
-		sol.WriteByte(binToBase64((b[i]&0x03)<<4 | b[i+1]>>4))
-		sol.WriteByte(binToBase64((b[i+1]&0x0F)<<2 | b[i+2]>>6))
-		sol.WriteByte(binToBase64(b[i+2] & 0x3F))
+		result.WriteByte(binToBase64(b[i] >> 2))
+		result.WriteByte(binToBase64((b[i]&0x03)<<4 | b[i+1]>>4))
+		result.WriteByte(binToBase64((b[i+1]&0x0F)<<2 | b[i+2]>>6))
+		result.WriteByte(binToBase64(b[i+2] & 0x3F))
 	}
 
 	switch len(b) % 3 {
 	case 1:
 		x := b[full]
-		sol.WriteByte(binToBase64(x >> 2))
-		sol.WriteByte(binToBase64((x & 0x03) << 4))
-		sol.WriteString("==")
+		result.WriteByte(binToBase64(x >> 2))
+		result.WriteByte(binToBase64((x & 0x03) << 4))
+		result.WriteString("==")
 	case 2:
 		x, y := b[full], b[full+1]
-		sol.WriteByte(binToBase64(x >> 2))
-		sol.WriteByte(binToBase64((x&0x03)<<4 | y>>4))
-		sol.WriteByte(binToBase64((y & 0x0F) << 2))
-		sol.WriteByte('=')
+		result.WriteByte(binToBase64(x >> 2))
+		result.WriteByte(binToBase64((x&0x03)<<4 | y>>4))
+		result.WriteByte(binToBase64((y & 0x0F) << 2))
+		result.WriteByte('=')
 	}
 
-	return sol.String()
+	return result.String()
 }
 
 func binToBase64(b byte) byte {

@@ -1,11 +1,18 @@
 package cryptoutil
 
-import "strings"
+import (
+	"math"
+	"strings"
+)
 
 func ScoreEnglish(b []byte) float64 {
+	if len(b) == 0 {
+		return math.Inf(-1)
+	}
+
 	var score float64
 	for _, v := range b {
-		// Esto convierte las mayusculas a minuscula
+		// Convierte las letras mayúsculas a minúsculas.
 		if v >= 'A' && v <= 'Z' {
 			v += 'a' - 'A'
 		}
@@ -15,7 +22,7 @@ func ScoreEnglish(b []byte) float64 {
 			score -= 50
 		}
 	}
-	return score
+	return score / float64(len(b))
 }
 
 var freq = map[byte]float64{

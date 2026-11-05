@@ -1,5 +1,7 @@
 package cryptoutil
 
+import "math"
+
 type Candidate struct {
 	DecryptedString []byte
 	Key             byte
@@ -7,7 +9,7 @@ type Candidate struct {
 }
 
 func FindXorKey(s []byte) Candidate {
-	bestScore := 0.0
+	bestScore := math.Inf(-1)
 	var bestKey byte
 	var maxResult []byte
 	for i := range 256 {

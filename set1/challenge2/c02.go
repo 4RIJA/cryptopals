@@ -17,11 +17,11 @@ func fixedStringXor(a string, b string) (string, error) {
 		return "", bErr
 	}
 
-	sol, err := cryptoutil.FixedXor(aBytes, bBytes)
+	result, err := cryptoutil.FixedXor(aBytes, bBytes)
 
 	if err != nil {
 		return "", err
 	}
 
-	return cryptoutil.HexEncode(sol), nil
+	return cryptoutil.HexEncode(result), nil
 }

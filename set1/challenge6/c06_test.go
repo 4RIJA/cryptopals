@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestChallenge6(t *testing.T) {
+func TestChallenge06_BreakRepeatingKeyXor(t *testing.T) {
 	lines, err := cryptoutil.ReadFileByLines("6.txt")
 	if err != nil {
 		t.Fatalf("could not read challenge input: %v", err)
@@ -35,9 +35,9 @@ func TestCountSetBits(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := kenighanAlgorithm(tt.in)
+		got := kernighanAlgorithm(tt.in)
 		if got != tt.want {
-			t.Errorf("countSetBits(%q) = %d, want %d", tt.in, got, tt.want)
+			t.Errorf("kernighanAlgorithm(%#x) = %d, want %d", tt.in, got, tt.want)
 		}
 	}
 }
@@ -50,10 +50,10 @@ func TestHammingDistance(t *testing.T) {
 	aBytes := []byte(in1)
 	bBytes := []byte(in2)
 
-	got, error := hammingDistance(aBytes, bBytes)
+	got, err := hammingDistance(aBytes, bBytes)
 
-	if error != nil {
-		t.Fatalf("%s", "La funciona a devuelto el error:"+error.Error())
+	if err != nil {
+		t.Fatalf("hammingDistance returned an error: %v", err)
 	}
 
 	if got != want {
