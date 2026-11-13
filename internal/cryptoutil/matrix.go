@@ -11,6 +11,9 @@ func SplitIntoBlocks(data []byte, n int) [][]byte {
 
 // Transpose transpone una matriz.
 func Transpose[T any](m [][]T) [][]T {
+	if len(m) == 0 {
+		return nil
+	}
 	transposedMatrix := make([][]T, len(m[0]))
 	for _, row := range m {
 		for j := range row {

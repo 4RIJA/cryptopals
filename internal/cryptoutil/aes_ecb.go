@@ -5,6 +5,13 @@ import (
 	"errors"
 )
 
+/*
+Si nos fijamos en el resultado, al final del texto descrifrado hay 4bytes a 0x04,
+esto es porque el emisor a la hora de cifrar el mansaje en aes-128 ecb mode tuvo
+que añadir ese pad para que el mensaje fuese multiplo de 16.
+A esta regla se le llama PKCS#7.
+*/
+
 func DecryptEcb(input []byte, key []byte) ([]byte, error) {
 	if len(input)%16 != 0 {
 		return nil, errors.New("The cipher text is not valid for decryption. The length isnt multiple of 16.")
@@ -21,6 +28,7 @@ func DecryptEcb(input []byte, key []byte) ([]byte, error) {
 	return result, nil
 }
 
+// Devuelvo el indice de los bytes encriptados con aes ecb mode
 func DetectEcb(input [][]byte) (int, error) {
 	for i, line := range input {
 		if len(line)%16 != 0 {

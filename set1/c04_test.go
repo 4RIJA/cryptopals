@@ -1,13 +1,14 @@
-package challenge4
+package set1
 
 import (
-	"math"
-
 	"cryptopals/internal/cryptoutil"
+	"math"
+	"strings"
+	"testing"
 )
 
 func findEncrypted(path string) (string, error) {
-	strings, err := cryptoutil.ReadFileByLines(path)
+	lines, err := cryptoutil.ReadFileByLines(path)
 	if err != nil {
 		return "", err
 	}
@@ -15,7 +16,7 @@ func findEncrypted(path string) (string, error) {
 	bestScore := math.Inf(-1)
 	bestResult := ""
 
-	for _, str := range strings {
+	for _, str := range lines {
 		decoded, e := cryptoutil.HexDecode(str)
 		if e != nil {
 			return "", e
@@ -29,4 +30,16 @@ func findEncrypted(path string) (string, error) {
 	}
 
 	return bestResult, nil
+}
+
+func TestChallenge04_FindEncrypted(t *testing.T) {
+	want := "Now that the party is jumping"
+
+	got, err := findEncrypted("testdata/4.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.TrimSpace(got) != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
 }

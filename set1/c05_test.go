@@ -1,9 +1,16 @@
-package challenge5
+package set1
 
 import (
+	"cryptopals/internal/cryptoutil"
 	"strings"
 	"testing"
 )
+
+func cipherXorWithICE(text string) string {
+	encryptedBytes := cryptoutil.XorRepeatedKeys([]byte{'I', 'C', 'E'}, []byte(text))
+	resultHex := cryptoutil.HexEncode(encryptedBytes)
+	return resultHex
+}
 
 func TestChallenge05_CipherXorWithICE(t *testing.T) {
 	in := "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal"

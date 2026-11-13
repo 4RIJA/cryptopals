@@ -1,6 +1,6 @@
-package challenge9
+package cryptoutil
 
-func pkCS7Padding(input []byte, size int) []byte {
+func PkCS7Padding(input []byte, size int) []byte {
 	lenToPad := size - len(input)%size
 
 	padded := make([]byte, len(input)+lenToPad)
